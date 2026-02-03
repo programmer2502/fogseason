@@ -26,9 +26,13 @@ const Navbar = () => {
     return (
         <nav className={`fixed w-full z-50 transition-all duration-300 ${scrolled ? 'glass py-2' : 'bg-transparent py-4'}`}>
             <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
+               <div className="cusomlogo">
+
+                <img width="40px" src="./logo4.png" alt="loading" />
                 <a href="#" className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary font-mono">
-                    Fog season HVAC
+                    Fog Season HVAC
                 </a>
+               </div>
 
                 {/* Desktop Menu */}
                 <div className="hidden md:flex space-x-8">
