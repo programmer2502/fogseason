@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL: 'https://fogseason.vercel.app/api',
+    baseURL: 'https://www.fogseason.in/api',
 });
 
 // Add a request interceptor to include the auth token
