@@ -21,7 +21,10 @@ export const DataProvider = ({ children }) => {
         try {
             const fetchedData = await fetchPublicData();
             if (fetchedData) {
-                setData(fetchedData);
+                setData(prev => ({
+                    ...prev,
+                    ...fetchedData
+                }));
             }
         } catch (err) {
             console.error("Failed to fetch data", err);
