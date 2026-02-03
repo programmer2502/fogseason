@@ -169,9 +169,10 @@ const Projects = () => {
 
                 {/* Filters */}
                 <div className="flex justify-center flex-wrap gap-4 mb-16">
-                    {allTags.map((tag) => (
+                    {allTags.map((tag, index) => (
                         <button
-                            key={tag}
+                            // key={tag}
+                            key={index}
                             onClick={() => setFilter(tag)}
                             className={`px-6 py-2 rounded-full text-sm font-medium transition-all duration-300 ${filter === tag
                                 ? 'bg-gradient-to-r from-secondary to-accent text-white shadow-lg'
@@ -189,8 +190,8 @@ const Projects = () => {
                     className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
                 >
                     <AnimatePresence>
-                        {filteredProjects && filteredProjects.map((project) => (
-                            <ProjectCard key={project.id} project={project} />
+                        {filteredProjects && filteredProjects.map((project, index) => (
+                            <ProjectCard key={index} project={project} />
                         ))}
                     </AnimatePresence>
                 </motion.div>

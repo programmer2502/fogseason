@@ -39,7 +39,8 @@ const Services = () => {
                 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
                     {services && services.map((service, index) => (
                         <motion.div
-                            key={service.id}
+                            // key={service.id}
+                            key={index}
                             initial={{ opacity: 0, scale: 0.9 }}
                             whileInView={{ opacity: 1, scale: 1 }}
                             viewport={{ once: true }}
