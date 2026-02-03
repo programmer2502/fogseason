@@ -134,10 +134,9 @@ const importData = async () => {
         await SiteConfig.deleteMany();
 
         // Create Admin User
-        const password = await bcrypt.hash('admin123', 10);
         await User.create({
             username: 'admin',
-            password: password
+            password: 'admin123'
         });
 
         // Create Collections
