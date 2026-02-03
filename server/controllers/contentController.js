@@ -10,8 +10,64 @@ const getSiteConfig = async () => {
         config = await SiteConfig.create({
             hero: {},
             about: {},
-            contact: {}
+            contact: {},
+            whatWeDo: [
+                {
+                    title: "Design and Engineering",
+                    description: "Include any necessary calculations, selections, and schematic designs. Mention the creation of blueprints or digital models if applicable.",
+                    icon: "PenTool"
+                },
+                {
+                    title: "Procurement",
+                    description: "Describe the process for acquiring HVAC units and components, including timelines and supplier details.",
+                    icon: "ShoppingCart"
+                },
+                {
+                    title: "Installation",
+                    description: "Outline the steps for installing the equipment, from site preparation to testing and commissioning.",
+                    icon: "Wrench"
+                },
+                {
+                    title: "Commissioning and Testing",
+                    description: "Specify procedures for ensuring that installed systems meet design specifications and operational requirements.",
+                    icon: "ClipboardCheck"
+                },
+                {
+                    title: "Annual Maintenance Contracts",
+                    description: "This includes tasks like cleaning, inspecting, and replacing parts to keep your system running efficiently. AMCs help prevent breakdowns, extend the lifespan of your equipment, and potentially lower energy costs.",
+                    icon: "CalendarCheck"
+                }
+            ]
         });
+    } else if (!config.whatWeDo || config.whatWeDo.length === 0) {
+        config.whatWeDo = [
+            {
+                title: "Design and Engineering",
+                description: "Include any necessary calculations, selections, and schematic designs. Mention the creation of blueprints or digital models if applicable.",
+                icon: "PenTool"
+            },
+            {
+                title: "Procurement",
+                description: "Describe the process for acquiring HVAC units and components, including timelines and supplier details.",
+                icon: "ShoppingCart"
+            },
+            {
+                title: "Installation",
+                description: "Outline the steps for installing the equipment, from site preparation to testing and commissioning.",
+                icon: "Wrench"
+            },
+            {
+                title: "Commissioning and Testing",
+                description: "Specify procedures for ensuring that installed systems meet design specifications and operational requirements.",
+                icon: "ClipboardCheck"
+            },
+            {
+                title: "Annual Maintenance Contracts",
+                description: "This includes tasks like cleaning, inspecting, and replacing parts to keep your system running efficiently. AMCs help prevent breakdowns, extend the lifespan of your equipment, and potentially lower energy costs.",
+                icon: "CalendarCheck"
+            }
+        ];
+        await config.save();
     }
     return config;
 };
@@ -29,6 +85,7 @@ exports.getPublicData = async (req, res) => {
         const data = {
             hero: config.hero,
             about: config.about,
+            whatWeDo: config.whatWeDo,
             contact: config.contact,
             projects: projects,
             services: services,
@@ -45,11 +102,11 @@ exports.getPublicData = async (req, res) => {
 
 // Section Updates (Hero, About, Contact)
 exports.updateSection = async (req, res) => {
-    const { section } = req.params; // 'hero', 'about', 'contact'
+    const { section } = req.params; // 'hero', 'about', 'contact', 'whatWeDo'
     const content = req.body;
 
     // Validate section name
-    if (!['hero', 'about', 'contact'].includes(section)) {
+    if (!['hero', 'about', 'contact', 'whatWeDo'].includes(section)) {
         return res.status(400).json({ message: 'Invalid section' });
     }
 

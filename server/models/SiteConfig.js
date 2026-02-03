@@ -17,6 +17,12 @@ const skillSchema = new mongoose.Schema({
     level: Number
 });
 
+const whatWeDoSchema = new mongoose.Schema({
+    title: String,
+    description: String,
+    icon: String
+});
+
 const siteConfigSchema = new mongoose.Schema({
     hero: {
         name: String,
@@ -32,6 +38,7 @@ const siteConfigSchema = new mongoose.Schema({
         experienceYears: Number,
         projectsCompleted: Number
     },
+    whatWeDo: [whatWeDoSchema],
     contact: {
         email: String,
         phone: String,

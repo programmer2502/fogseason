@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { Lock, User } from 'lucide-react';
@@ -7,16 +7,24 @@ import { toast } from 'react-toastify';
 const Login = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const { login } = useAuth();
+    const { login, isAuthenticated } = useAuth();
     const navigate = useNavigate();
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        if (login(username, password)) {
-            toast.success("Welcome back, Admin!");
+    // Redirect if already authenticated
+    useEffect(() => {
+        if (isAuthenticated) {
             navigate('/admin/dashboard');
+        }
+    }, [isAuthenticated, navigate]);
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const success = await login(username, password);
+        if (success) {
+            toast.success("Welcome back, Admin!");
+            // Navigation will be handled by the useEffect above
         } else {
-            toast.error("Invalid credentials");
+            toast.error("Invalid credentials or server error");
         }
     };
 

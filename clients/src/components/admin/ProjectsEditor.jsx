@@ -4,6 +4,8 @@ import { useData } from '../../context/DataContext';
 import { Save, Plus, Trash2, GripVertical, Image as ImageIcon } from 'lucide-react';
 import { toast } from 'react-toastify';
 import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
+import ImageKit from "imagekit-javascript";
+import { getUploadAuth } from '../../utils/api';
 
 import { compressImage } from '../../utils/imageUtils';
 
@@ -45,25 +47,49 @@ const ProjectsEditor = () => {
         const files = Array.from(e.target.files);
         if (files.length === 0) return;
 
-        const toastId = toast.loading("Compressing & Uploading...");
+        const toastId = toast.loading("Uploading to ImageKit...");
 
         try {
-            const compressedImages = await Promise.all(files.map(file => compressImage(file)));
+            // Get Auth params from backend
+            const authParams = await getUploadAuth();
+
+            const imagekit = new ImageKit({
+                publicKey: "public_7ELopVsEjcPXLZ80Yw/6U0VEv8U=",
+                urlEndpoint: "https://ik.imagekit.io/cwudhpweq",
+            });
+
+            const uploadPromises = files.map(file => {
+                return new Promise((resolve, reject) => {
+                    imagekit.upload({
+                        file: file,
+                        fileName: file.name,
+                        tags: ["portfolio", "project"],
+                        token: authParams.token,
+                        signature: authParams.signature,
+                        expire: authParams.expire
+                    }, function (err, result) {
+                        if (err) reject(err);
+                        else resolve(result.url);
+                    });
+                });
+            });
+
+            const uploadedUrls = await Promise.all(uploadPromises);
 
             // Get current gallery value
             const currentGallery = watch(`projects.${index}.gallery`) || '';
             const currentImages = currentGallery.split('\n').filter(Boolean);
 
             // Append new images
-            const newImages = [...currentImages, ...compressedImages];
+            const newImages = [...currentImages, ...uploadedUrls];
 
             setValue(`projects.${index}.gallery`, newImages.join('\n'), { shouldDirty: true });
 
-            toast.update(toastId, { render: "Images added successfully!", type: "success", isLoading: false, autoClose: 2000 });
+            toast.update(toastId, { render: "Images uploaded successfully!", type: "success", isLoading: false, autoClose: 2000 });
 
         } catch (error) {
             console.error(error);
-            toast.update(toastId, { render: "Failed to process images", type: "error", isLoading: false, autoClose: 3000 });
+            toast.update(toastId, { render: "Failed to upload images", type: "error", isLoading: false, autoClose: 3000 });
         }
     };
 

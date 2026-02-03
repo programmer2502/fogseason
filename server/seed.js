@@ -111,6 +111,33 @@ const initialData = {
             description: "We extended the boundaries to Tamilnadu and registered the new branch in Chennai."
         }
     ],
+    whatWeDo: [
+        {
+            title: "Design and Engineering",
+            description: "Include any necessary calculations, selections, and schematic designs. Mention the creation of blueprints or digital models if applicable.",
+            icon: "PenTool"
+        },
+        {
+            title: "Procurement",
+            description: "Describe the process for acquiring HVAC units and components, including timelines and supplier details.",
+            icon: "ShoppingCart"
+        },
+        {
+            title: "Installation",
+            description: "Outline the steps for installing the equipment, from site preparation to testing and commissioning.",
+            icon: "Wrench"
+        },
+        {
+            title: "Commissioning and Testing",
+            description: "Specify procedures for ensuring that installed systems meet design specifications and operational requirements.",
+            icon: "ClipboardCheck"
+        },
+        {
+            title: "Annual Maintenance Contracts",
+            description: "This includes tasks like cleaning, inspecting, and replacing parts to keep your system running efficiently. AMCs help prevent breakdowns, extend the lifespan of your equipment, and potentially lower energy costs.",
+            icon: "CalendarCheck"
+        }
+    ],
     contact: {
         email: "info@fogseasonhvac.com",
         phone: "+91 78688 06841",
@@ -134,10 +161,9 @@ const importData = async () => {
         await SiteConfig.deleteMany();
 
         // Create Admin User
-        const password = await bcrypt.hash('admin123', 10);
         await User.create({
             username: 'admin',
-            password: password
+            password: 'admin123'
         });
 
         // Create Collections
@@ -155,7 +181,11 @@ const importData = async () => {
         console.log('Data Imported!');
         process.exit();
     } catch (error) {
-        console.error(`${error}`);
+        console.error('------------------------------------------------');
+        console.error('❌ MongoDB Connection Error:', error.message);
+        console.error('------------------------------------------------');
+        console.error('It looks like MongoDB is not running or not matching the URI.');
+        console.error('Current URI:', process.env.MONGO_URI);
         process.exit(1);
     }
 };

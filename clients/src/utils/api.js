@@ -44,8 +44,13 @@ export const updateCollectionItemData = async (collection, id, item) => {
 };
 
 export const deleteCollectionItemData = async (collection, id) => {
-    const { data } = await api.delete(`/collections/${collection}/${id}`);
-    return data;
+    const response = await api.delete(`/collections/${collection}/${id}`);
+    return response.data;
+};
+
+export const getUploadAuth = async () => {
+    const response = await api.get('/upload/auth');
+    return response.data;
 };
 
 export default api;
