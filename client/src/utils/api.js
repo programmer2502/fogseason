@@ -1,8 +1,8 @@
 import axios from 'axios';
 
 const api = axios.create({
-    // baseURL: 'https://fogseason.onrender.com/api',
-    baseURL: 'http://localhost:5000/api',
+    baseURL: 'https://fogseason.onrender.com/api',
+    // baseURL: 'http://localhost:5000/api',
 });
 
 // Add a request interceptor to include the auth token
