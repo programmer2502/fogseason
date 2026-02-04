@@ -54,48 +54,7 @@ const initialData = {
         { title: "Fire Alarm System", icon: "Bell" }
     ],
     projects: [
-        {
-            title: "Skyline Tower",
-            description: "Full MEP execution for a 50-story commercial skyscraper in downtown.",
-            image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
-            images: [
-                "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
-                "https://images.unsplash.com/photo-1479839672679-a46483c0e7c1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
-                "https://images.unsplash.com/photo-1435686025229-aa445249715b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
-            ],
-            tags: ["HVAC", "Electrical", "BMS"],
-            github: "#",
-            demo: "#",
-            category: "Commercial"
-        },
-        {
-            title: "City General Hospital",
-            description: "Specialized medical gas systems and clean room HVAC for a 500-bed hospital.",
-            image: "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
-            images: [
-                "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
-                "https://images.unsplash.com/photo-1538108149393-fbbd8189718c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
-                "https://images.unsplash.com/photo-1504813184591-01572f98c85f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
-            ],
-            tags: ["Medical Gas", "HVAC", "Safety"],
-            github: "#",
-            demo: "#",
-            category: "Healthcare"
-        },
-        {
-            title: "Green Valley Resort",
-            description: "Sustainable energy solutions and water recycling systems for an eco-resort.",
-            image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
-            images: [
-                "https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
-                "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
-                "https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
-            ],
-            tags: ["Plumbing", "Solar", "Green"],
-            github: "#",
-            demo: "#",
-            category: "Hospitality"
-        }
+    
     ],
     experience: [
         {

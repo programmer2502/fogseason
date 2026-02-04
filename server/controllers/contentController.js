@@ -101,16 +101,47 @@ exports.getPublicData = async (req, res) => {
 // --- ADMIN ---
 
 // Section Updates (Hero, About, Contact)
+// Section Updates (Hero, About, Contact) - AND Collections (Projects, Services, Experience)
 exports.updateSection = async (req, res) => {
-    const { section } = req.params; // 'hero', 'about', 'contact', 'whatWeDo'
+    const { section } = req.params; // 'hero', 'about', 'contact', 'whatWeDo', 'projects', 'services', 'experience'
     const content = req.body;
 
-    // Validate section name
-    if (!['hero', 'about', 'contact', 'whatWeDo'].includes(section)) {
+    // List of valid sections
+    const configSections = ['hero', 'about', 'contact', 'whatWeDo'];
+    const collectionSections = ['projects', 'services', 'experience'];
+
+    if (!configSections.includes(section) && !collectionSections.includes(section)) {
         return res.status(400).json({ message: 'Invalid section' });
     }
 
     try {
+        // Handle Collections (Bulk Update)
+        if (collectionSections.includes(section)) {
+            console.log(`[UpdateSection] Updating collection: ${section}`);
+            console.log(`[UpdateSection] Payload type: ${typeof content}, IsArray: ${Array.isArray(content)}`);
+            if (Array.isArray(content)) {
+                console.log(`[UpdateSection] Payload length: ${content.length}`);
+                if (content.length > 0) {
+                    console.log(`[UpdateSection] First item keys: ${Object.keys(content[0])}`);
+                }
+            } else {
+                console.log(`[UpdateSection] Content:`, content);
+            }
+
+            const Model = getModel(section);
+            if (!Model) return res.status(500).json({ message: 'Model not found for collection' });
+
+            // Clear existing and insert new (Bulk Replace)
+            const deleteResult = await Model.deleteMany({});
+            console.log(`[UpdateSection] Deleted count: ${deleteResult.deletedCount}`);
+
+            const newItems = await Model.insertMany(content);
+            console.log(`[UpdateSection] Inserted count: ${newItems.length}`);
+
+            return res.json(newItems);
+        }
+
+        // Handle SiteConfig sections
         let config = await getSiteConfig();
         config[section] = content;
         await config.save();

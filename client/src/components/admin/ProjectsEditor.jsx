@@ -18,7 +18,9 @@ const ProjectsEditor = () => {
 
     const { register, control, handleSubmit, reset, setValue, watch } = useForm({
         defaultValues: { projects: preparedProjects }
+        
     });
+    console.log(preparedProjects,"test")
 
     // Reset form when data changes (e.g. initial load)
     useEffect(() => {
