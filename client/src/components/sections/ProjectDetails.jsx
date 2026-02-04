@@ -22,10 +22,7 @@ const ProjectDetails = () => {
 
                 <div className="space-y-12 relative">
                     {/* Timeline Line */}
-                    <div className="absolute left-0 md:left-1/2 top-0 bottom-0 w-px bg-slate-200 transform md:-translate-x-1/2">
-
-
-                    </div>
+                   
 
                     <div className="auto-text">
                         <span className="changing-text">
