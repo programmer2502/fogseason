@@ -1,6 +1,6 @@
 export const initialData = {
     hero: {
-        name: "FOG SEASON HVAC",
+        name: "fogseason",
         title: "Heating | Ventilation | Air Conditioning",
         tagline: "Your Comfort, Our Priority - All Seasons Round",
         cta: [
