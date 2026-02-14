@@ -46,7 +46,7 @@ const Hero = () => {
                         Welcome to <br className="md:hidden" />
                     </span>
                     <span className="lowercase text-transparent bg-clip-text bg-gradient-to-r from-primary via-secondary to-accent ">
-                        {hero.name} <span className="uppercase">hvac</span>
+                            fogseason  <span className="uppercase">hvac</span>
                     </span>
                 </motion.h1>
                 <motion.h2
