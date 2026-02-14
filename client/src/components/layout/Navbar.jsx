@@ -30,7 +30,7 @@ const Navbar = () => {
 
                 <img width="40px" src="./logo4.png" alt="loading" />
                 <a href="#" className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary font-mono">
-                    Fog Season HVAC
+                    fogseason HVAC
                 </a>
                </div>
 
