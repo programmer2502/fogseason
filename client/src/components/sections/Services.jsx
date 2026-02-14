@@ -32,7 +32,7 @@ const Services = () => {
                 >
                     <h2 className="text-3xl md:text-4xl font-extrabold mb-4 text-blue-900 uppercase tracking-wide">OUR SERVICES:</h2>
                     <p className="mt-4 text-blue-900 font-semibold max-w-3xl mx-auto">
-                        FOG SEASON HVAC provides a complete range of Mechanical services, including:
+                        fogseason HVAC provides a complete range of Mechanical services, including:
                     </p>
                 </motion.div>
 
