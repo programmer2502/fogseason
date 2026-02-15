@@ -77,7 +77,7 @@ const getSiteConfig = async () => {
 exports.getPublicData = async (req, res) => {
     try {
         const config = await getSiteConfig();
-        const projects = await Project.find().sort({ createdAt: -1 });
+        const projects = await Project.find().sort({ order: 1 });
         const services = await Service.find();
         const experience = await Experience.find();
 
@@ -135,7 +135,16 @@ exports.updateSection = async (req, res) => {
             const deleteResult = await Model.deleteMany({});
             console.log(`[UpdateSection] Deleted count: ${deleteResult.deletedCount}`);
 
-            const newItems = await Model.insertMany(content);
+            // Assign order if it's the projects collection
+            let contentToInsert = content;
+            if (section === 'projects' && Array.isArray(content)) {
+                contentToInsert = content.map((item, index) => ({
+                    ...item,
+                    order: index
+                }));
+            }
+
+            const newItems = await Model.insertMany(contentToInsert);
             console.log(`[UpdateSection] Inserted count: ${newItems.length}`);
 
             return res.json(newItems);
