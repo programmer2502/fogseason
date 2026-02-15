@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Github, ExternalLink, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Github, ExternalLink, ChevronLeft, ChevronRight, MapPin } from 'lucide-react';
 import { useData } from '../../context/DataContext';
 
 const ProjectCard = ({ project }) => {
@@ -132,8 +132,9 @@ const ProjectCard = ({ project }) => {
                     </p>
                     <div className="flex flex-wrap gap-2 mt-auto">
                         {project.tags.map(tag => (
-                            <span key={tag} className="text-xs font-medium px-3 py-1 bg-slate-100 text-gray-700 rounded-full">
-                                #{tag}
+                            <span key={tag} className="text-xs font-medium px-3 py-1 bg-slate-100 text-gray-700 rounded-full flex items-center gap-1">
+                                <MapPin size={12} className="text-secondary" />
+                                {tag}
                             </span>
                         ))}
                     </div>
