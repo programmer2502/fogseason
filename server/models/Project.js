@@ -9,6 +9,7 @@ const projectSchema = new mongoose.Schema({
     github: { type: String },
     demo: { type: String },
     category: { type: String },
+    order: { type: Number, default: 0 },
     createdAt: { type: Date, default: Date.now }
 });
 
