@@ -54,7 +54,7 @@ const initialData = {
         { title: "Fire Alarm System", icon: "Bell" }
     ],
     projects: [
-    
+
     ],
     experience: [
         {
