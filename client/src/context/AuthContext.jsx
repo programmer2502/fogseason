@@ -19,6 +19,36 @@ export const AuthProvider = ({ children }) => {
         setLoading(false);
     }, []);
 
+    // Auto Logout Logic
+    useEffect(() => {
+        if (!isAuthenticated) return;
+
+        const LOGOUT_TIME = 20 * 60 * 1000; // 20 minutes
+        let logoutTimer;
+
+        const resetTimer = () => {
+            if (logoutTimer) clearTimeout(logoutTimer);
+            logoutTimer = setTimeout(() => {
+                logout();
+            }, LOGOUT_TIME);
+        };
+
+        const events = ['mousemove', 'keydown', 'click', 'scroll', 'touchstart'];
+
+        events.forEach(event => {
+            window.addEventListener(event, resetTimer);
+        });
+
+        resetTimer();
+
+        return () => {
+            if (logoutTimer) clearTimeout(logoutTimer);
+            events.forEach(event => {
+                window.removeEventListener(event, resetTimer);
+            });
+        };
+    }, [isAuthenticated]);
+
     const login = async (username, password) => {
         try {
             const data = await loginUser(username, password);
