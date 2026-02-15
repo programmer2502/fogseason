@@ -101,7 +101,7 @@ const initialData = {
         email: "info@fogseasonhvac.com",
         phone: "+91 78688 06841",
         headOffice: "#27, Sanjeevappa Layout, Thilgara beedi, varthur near Marathahalli, Bangalore - 560087",
-        branchOffice: "No- 21/77, Kamaraj nagar, Madhuraboyal, Chennai - 600095",
+        branchOffice: "No- 21/77, Kamaraj nagar, Madhuravoyal, Chennai - 600095",
         socials: [
             { platform: "LinkedIn", url: "https://linkedin.com" },
             { platform: "Twitter", url: "https://twitter.com" }

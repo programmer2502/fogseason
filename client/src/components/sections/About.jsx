@@ -1,10 +1,25 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useData } from '../../context/DataContext';
 
 const About = () => {
     const { data } = useData();
     const { about } = data;
+
+    const [currentImageIndex, setCurrentImageIndex] = useState(0);
+    const images = [
+        '/ab1.jpg',
+        '/ab2.jpg',
+        '/ab3.jpg',
+        '/ab4.jpg'
+    ];
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setCurrentImageIndex((prev) => (prev + 1) % images.length);
+        }, 6000);
+        return () => clearInterval(interval);
+    }, []);
 
     return (
         <section id="about" className="py-24 bg-slate-50 relative overflow-hidden">
@@ -29,12 +44,21 @@ const About = () => {
                     >
                         <div className="absolute -inset-4 bg-gradient-to-r from-primary to-secondary rounded-2xl opacity-20 group-hover:opacity-40 blur-xl transition-opacity duration-500"></div>
                         <div className="relative rounded-2xl overflow-hidden aspect-square md:aspect-[3/4] glass p-2 transform group-hover:scale-[1.02] transition-transform duration-500">
-                            <img
-                                src={about.image}
-                                alt="Profile"
-                                className="w-full h-full object-cover rounded-xl"
-                            />
-                            <div className="absolute inset-0 bg-primary mix-blend-overlay opacity-0 group-hover:opacity-20 transition-opacity duration-500"></div>
+                            <div className="relative w-full h-full rounded-xl overflow-hidden">
+                                <AnimatePresence>
+                                    <motion.img
+                                        key={currentImageIndex}
+                                        src={images[currentImageIndex]}
+                                        alt="About Us"
+                                        initial={{ opacity: 0 }}
+                                        animate={{ opacity: 1 }}
+                                        exit={{ opacity: 0 }}
+                                        transition={{ duration: 2.5, ease: "easeInOut" }}
+                                        className="absolute inset-0 w-full h-full object-cover"
+                                    />
+                                </AnimatePresence>
+                                <div className="absolute inset-0 bg-primary mix-blend-overlay opacity-0 group-hover:opacity-20 transition-opacity duration-500"></div>
+                            </div>
                         </div>
                     </motion.div>
 
