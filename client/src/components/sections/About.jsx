@@ -50,9 +50,9 @@ const About = () => {
                                         key={currentImageIndex}
                                         src={images[currentImageIndex]}
                                         alt="About Us"
-                                        initial={{ opacity: 0 }}
-                                        animate={{ opacity: 1 }}
-                                        exit={{ opacity: 0 }}
+                                        initial={{ opacity: 0, zIndex: 1 }}
+                                        animate={{ opacity: 1, zIndex: 1 }}
+                                        exit={{ opacity: 1, zIndex: 0 }}
                                         transition={{ duration: 2.5, ease: "easeInOut" }}
                                         className="absolute inset-0 w-full h-full object-cover"
                                     />
