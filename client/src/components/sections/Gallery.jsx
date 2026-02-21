@@ -161,7 +161,7 @@ const Gallery = () => {
                     viewport={{ once: true }}
                     className="text-center mb-12"
                 >
-                    <h2 className="text-3xl md:text-5xl font-bold mb-4 text-slate-900">Our Gallery</h2>
+                    <h2 className="text-3xl md:text-5xl font-bold mb-4 text-slate-900">Quality Execution Gallery</h2>
                     <div className="w-20 h-1 bg-gradient-to-r from-secondary to-accent mx-auto rounded-full" />
                     <p className="text-gray-500 mt-4 max-w-xl mx-auto">
                         A visual showcase of our completed projects and installations.
