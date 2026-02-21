@@ -63,16 +63,13 @@ const Hero = () => {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.5 }}
-                    className="flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0 md:space-x-6 mb-12"
+                    className="flex flex-col md:flex-row justify-center items-center gap-6 mb-12"
                 >
                     {hero.cta.map((btn, idx) => (
                         <a
                             key={idx}
                             href={btn.link}
-                            className={`px-8 py-3 rounded-full font-medium transition-all duration-300 w-48 md:w-auto ${btn.primary
-                                ? 'bg-primary text-white hover:bg-blue-600 shadow-lg shadow-blue-500/30'
-                                : 'glass text-slate-900 hover:border-primary hover:text-primary'
-                                }`}
+                            className={btn.primary ? 'btn-primary min-w-[180px]' : 'btn-secondary min-w-[180px]'}
                         >
                             {btn.label}
                         </a>

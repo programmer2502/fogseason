@@ -22,16 +22,17 @@ const Services = () => {
     };
 
     return (
-        <section id="services" className="py-24 bg-slate-50 relative">
-            <div className="max-w-[1400px] mx-auto px-6 relative z-10">
+        <section id="services" className="section-padding bg-white relative">
+            <div className="container-custom relative z-10">
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    className="text-center mb-12"
+                    className="text-center mb-20"
                 >
-                    <h2 className="text-3xl md:text-4xl font-extrabold mb-4 text-blue-900 uppercase tracking-wide">OUR SERVICES:</h2>
-                    <p className="mt-4 text-blue-900 font-semibold max-w-3xl mx-auto">
+                    <h2 className="text-4xl md:text-6xl font-bold mb-6 text-slate-900">Our Services</h2>
+                    <div className="w-24 h-1.5 bg-gradient-to-r from-blue-600 to-cyan-500 mx-auto rounded-full" />
+                    <p className="mt-8 text-slate-600 text-lg max-w-2xl mx-auto font-medium">
                         fogseason HVAC provides a complete range of Mechanical services, including:
                     </p>
                 </motion.div>

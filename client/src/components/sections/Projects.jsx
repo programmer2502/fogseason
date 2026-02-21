@@ -156,16 +156,16 @@ const Projects = () => {
         : projects.filter(p => p.category === filter);
 
     return (
-        <section id="projects" className="py-24 bg-slate-50 relative">
-            <div className="max-w-7xl mx-auto px-6 relative z-10">
+        <section id="projects" className="section-padding bg-slate-50 relative">
+            <div className="container-custom relative z-10">
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    className="text-center mb-12"
+                    className="text-center mb-20"
                 >
-                    <h2 className="text-3xl md:text-5xl font-bold mb-4 text-slate-900">Featured Projects</h2>
-                    <div className="w-20 h-1 bg-gradient-to-r from-secondary to-accent mx-auto rounded-full"></div>
+                    <h2 className="text-4xl md:text-6xl font-bold mb-6 text-slate-900">Featured Projects</h2>
+                    <div className="w-24 h-1.5 bg-gradient-to-r from-secondary to-accent mx-auto rounded-full"></div>
                 </motion.div>
 
                 {/* Filters */}

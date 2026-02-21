@@ -40,10 +40,15 @@ const Navbar = () => {
                 </div>
 
                 {/* Desktop Menu */}
-                <div className="hidden md:flex space-x-8">
+                <div className="hidden md:flex items-center space-x-10">
                     {navLinks.map((link) => (
-                        <a key={link.name} href={link.href} className="text-gray-600 hover:text-primary transition-colors text-sm uppercase tracking-widest font-medium">
+                        <a
+                            key={link.name}
+                            href={link.href}
+                            className="group relative py-1 text-gray-600 hover:text-primary transition-colors text-sm uppercase tracking-[0.15em] font-semibold"
+                        >
                             {link.name}
+                            <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
                         </a>
                     ))}
                 </div>

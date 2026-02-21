@@ -30,19 +30,19 @@ const Contact = () => {
     }
 
     return (
-        <section id="contact" className="py-24 bg-slate-50 relative overflow-hidden">
+        <section id="contact" className="section-padding bg-white relative overflow-hidden">
             {/* Background Decoration */}
             <div className="absolute -left-20 top-20 w-80 h-80 bg-primary/5 rounded-full blur-3xl"></div>
 
-            <div className="max-w-7xl mx-auto px-6 relative z-10">
+            <div className="container-custom relative z-10">
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    className="text-center mb-16"
+                    className="text-center mb-20"
                 >
-                    <h2 className="text-3xl md:text-5xl font-bold mb-4 text-slate-900">Get In Touch</h2>
-                    <div className="w-20 h-1 bg-gradient-to-r from-secondary to-accent mx-auto rounded-full"></div>
+                    <h2 className="text-4xl md:text-6xl font-bold mb-6 text-slate-900">Get In Touch</h2>
+                    <div className="w-24 h-1.5 bg-gradient-to-r from-secondary to-accent mx-auto rounded-full"></div>
                 </motion.div>
 
                 <div className="grid md:grid-cols-2 gap-12 lg:gap-24">

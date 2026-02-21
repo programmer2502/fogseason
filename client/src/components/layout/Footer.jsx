@@ -17,8 +17,8 @@ const Footer = () => {
     };
 
     return (
-        <footer className="bg-slate-100 py-12 border-t border-black/5 relative z-10">
-            <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center">
+        <footer className="py-20 bg-slate-900 text-white relative z-10">
+            <div className="container-custom flex flex-col md:flex-row justify-between items-center">
                 <div className="mb-8 md:mb-0 text-center md:text-left">
                     <span className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary font-mono">Fog season HVAC</span>
                     <p className="text-gray-600 text-sm mt-3">

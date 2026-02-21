@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Camera, X, ChevronLeft, ChevronRight, ZoomIn } from 'lucide-react';
+import { Camera, X, ChevronLeft, ChevronRight, ZoomIn, ChevronDown, ChevronUp } from 'lucide-react';
 import { useData } from '../../context/DataContext';
 
 // Lightbox Component
@@ -108,44 +108,60 @@ const ComingSoon = () => (
 // Gallery Item Card
 const GalleryCard = ({ item, index, onClick }) => (
     <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: '-50px' }}
-        transition={{ duration: 0.4, delay: index * 0.05 }}
-        className="group relative overflow-hidden rounded-2xl cursor-pointer shadow-sm hover:shadow-xl transition-shadow duration-300"
+        className="group relative overflow-hidden rounded-3xl cursor-pointer shadow-lg hover:shadow-2xl transition-all duration-500 mb-8"
         onClick={() => onClick(index)}
-        style={{
-            // Vary heights for a masonry feel across items
-            gridRowEnd: `span ${index % 3 === 0 ? 2 : 1}`
-        }}
+        whileHover={{ scale: 1.02 }}
     >
         <img
             src={item.url}
             alt={item.caption || `Gallery image ${index + 1}`}
-            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-            style={{ minHeight: index % 3 === 0 ? '320px' : '200px' }}
+            className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-110"
         />
         {/* Hover overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
-            {item.caption && (
-                <p className="text-white text-sm font-medium translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
-                    {item.caption}
-                </p>
-            )}
-            <div className="mt-2 translate-y-2 group-hover:translate-y-0 transition-transform duration-300 delay-75">
-                <span className="inline-flex items-center gap-1 text-xs text-white/70">
-                    <ZoomIn size={14} /> Click to view
-                </span>
-            </div>
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/20 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300 flex flex-col justify-end p-6">
+            <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                whileHover={{ opacity: 1, y: 0 }}
+                className="space-y-2 text-left"
+            >
+                {item.caption && (
+                    <p className="text-white text-lg font-bold">
+                        {item.caption}
+                    </p>
+                )}
+                <div className="flex items-center gap-2 text-primary">
+                    <ZoomIn size={18} />
+                    <span className="text-sm font-semibold uppercase tracking-wider">View Project</span>
+                </div>
+            </motion.div>
         </div>
     </motion.div>
 );
+
+const INITIAL_COUNT = 2;
+
+// Hook to detect lg+ screen (>= 1024px)
+const useIsDesktop = () => {
+    const [isDesktop, setIsDesktop] = useState(() => window.innerWidth >= 1024);
+    React.useEffect(() => {
+        const handler = () => setIsDesktop(window.innerWidth >= 1024);
+        window.addEventListener('resize', handler);
+        return () => window.removeEventListener('resize', handler);
+    }, []);
+    return isDesktop;
+};
 
 // Main Gallery Section
 const Gallery = () => {
     const { data } = useData();
     const gallery = data.gallery || [];
     const [lightboxIndex, setLightboxIndex] = useState(null);
+    const [showAll, setShowAll] = useState(false);
+    const isDesktop = useIsDesktop();
+
+    // On desktop always show all; on mobile respect showAll toggle
+    const visibleImages = isDesktop ? gallery : (showAll ? gallery : gallery.slice(0, INITIAL_COUNT));
+    const hasMore = !isDesktop && gallery.length > INITIAL_COUNT;
 
     return (
         <section id="gallery" className="py-24 bg-white relative overflow-hidden">
@@ -172,19 +188,51 @@ const Gallery = () => {
                 {gallery.length === 0 ? (
                     <ComingSoon />
                 ) : (
-                    <div
-                        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
-                        style={{ gridAutoRows: '160px' }}
-                    >
-                        {gallery.map((item, index) => (
-                            <GalleryCard
-                                key={item._id || index}
-                                item={item}
-                                index={index}
-                                onClick={setLightboxIndex}
-                            />
-                        ))}
-                    </div>
+                    <>
+                        <div
+                            className="columns-1 sm:columns-2 lg:columns-3 gap-8"
+                        >
+                            <AnimatePresence>
+                                {visibleImages.map((item, index) => (
+                                    <motion.div
+                                        key={item._id || index}
+                                        initial={{ opacity: 0, scale: 0.9 }}
+                                        animate={{ opacity: 1, scale: 1 }}
+                                        exit={{ opacity: 0, scale: 0.9 }}
+                                        transition={{ duration: 0.5, delay: index * 0.05 }}
+                                        className="break-inside-avoid"
+                                    >
+                                        <GalleryCard
+                                            item={item}
+                                            index={index}
+                                            onClick={setLightboxIndex}
+                                        />
+                                    </motion.div>
+                                ))}
+                            </AnimatePresence>
+                        </div>
+
+                        {/* View More / View Less Button */}
+                        {hasMore && (
+                            <motion.div
+                                initial={{ opacity: 0, y: 10 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                className="flex justify-center mt-10"
+                            >
+                                <button
+                                    onClick={() => setShowAll(prev => !prev)}
+                                    className="inline-flex items-center gap-2 px-8 py-3 rounded-full bg-gradient-to-r from-secondary to-accent text-white font-semibold shadow-md hover:shadow-lg hover:scale-105 active:scale-95 transition-all duration-200"
+                                >
+                                    {showAll ? (
+                                        <><ChevronUp size={18} /> View Less</>
+                                    ) : (
+                                        <><ChevronDown size={18} /> View More ({gallery.length - INITIAL_COUNT} more)</>
+                                    )}
+                                </button>
+                            </motion.div>
+                        )}
+                    </>
                 )}
             </div>
 

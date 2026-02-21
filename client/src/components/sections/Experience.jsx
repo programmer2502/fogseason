@@ -8,16 +8,16 @@ const Experience = () => {
     const { experience } = data;
 
     return (
-        <section id="experience" className="py-24 bg-slate-50 relative">
-            <div className="max-w-4xl mx-auto px-6 relative z-10">
+        <section id="experience" className="section-padding bg-slate-50 relative">
+            <div className="container-custom relative z-10">
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    className="text-center mb-16"
+                    className="text-center mb-20"
                 >
-                    <h2 className="text-3xl md:text-5xl font-bold mb-4 text-slate-900">Our Journey</h2>
-                    <div className="w-20 h-1 bg-gradient-to-r from-primary to-secondary mx-auto rounded-full"></div>
+                    <h2 className="text-4xl md:text-6xl font-bold mb-6 text-slate-900">Our Journey</h2>
+                    <div className="w-24 h-1.5 bg-gradient-to-r from-primary to-secondary mx-auto rounded-full"></div>
                 </motion.div>
 
                 <div className="space-y-12 relative">
