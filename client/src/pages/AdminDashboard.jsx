@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
-import { Home, User, Briefcase, Code, Layers, MessageSquare, LogOut, Settings } from 'lucide-react';
+import { Home, User, Briefcase, Code, Layers, MessageSquare, LogOut, Settings, Image } from 'lucide-react';
 import HeroEditor from '../components/admin/HeroEditor';
 import AboutEditor from '../components/admin/AboutEditor';
 import ServicesEditor from '../components/admin/ServicesEditor';
 import ProjectsEditor from '../components/admin/ProjectsEditor';
 import ExperienceEditor from '../components/admin/ExperienceEditor';
 import ContactEditor from '../components/admin/ContactEditor';
+import GalleryEditor from '../components/admin/GalleryEditor';
 
 const AdminDashboard = () => {
     const { logout } = useAuth();
@@ -18,6 +19,7 @@ const AdminDashboard = () => {
         { id: 'services', label: 'Services', icon: Layers },
         { id: 'experience', label: 'Experience', icon: Briefcase },
         { id: 'projects', label: 'Projects', icon: Code },
+        { id: 'gallery', label: 'Gallery', icon: Image },
         { id: 'contact', label: 'Contact Info', icon: MessageSquare },
     ];
 
@@ -28,6 +30,7 @@ const AdminDashboard = () => {
             case 'services': return <ServicesEditor />;
             case 'experience': return <ExperienceEditor />;
             case 'projects': return <ProjectsEditor />;
+            case 'gallery': return <GalleryEditor />;
             case 'contact': return <ContactEditor />;
             default: return <HeroEditor />;
         }

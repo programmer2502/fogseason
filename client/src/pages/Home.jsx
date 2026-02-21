@@ -5,6 +5,7 @@ import Hero from '../components/sections/Hero';
 import About from '../components/sections/About';
 import Services from '../components/sections/Services';
 import Projects from '../components/sections/Projects';
+import Gallery from '../components/sections/Gallery';
 import Experience from '../components/sections/Experience';
 import Contact from '../components/sections/Contact';
 import ProjectDetails from '../components/sections/ProjectDetails';
@@ -20,6 +21,7 @@ const Home = () => {
                 <Experience />
                 <ProjectDetails />
                 <Projects />
+                <Gallery />
                 <Contact />
             </main>
             <Footer />

@@ -32,7 +32,7 @@ const Hero = () => {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.2 }}
-                    className="text-primary font-medium tracking-[0.2em]  mb-4 text-sm md:text-base"
+                    className="uppercase text-primary font-medium tracking-[0.2em]  mb-4 text-sm md:text-base"
                 >
                     {hero.tagline}
                 </motion.p>
@@ -42,11 +42,12 @@ const Hero = () => {
                     transition={{ delay: 0.3, duration: 0.5, type: "spring" }}
                     className="text-5xl md:text-8xl font-bold text-slate-900 mb-6 tracking-tight"
                 >
-                    <span className="block uppercase">
-                        Welcome to <br className="md:hidden" />
-                    </span>
-                    <span className="lowercase text-transparent bg-clip-text bg-gradient-to-r from-primary via-secondary to-accent ">
-                        {hero.name} <span className="uppercase">hvac</span>
+                    <span className="block">
+                        Welcome To  <br className="md:hidden" />
+
+                        <span className="lowercase text-transparent bg-clip-text bg-gradient-to-r from-primary via-secondary to-accent ">
+                            fogseason  <span className="uppercase">hvac</span>
+                        </span>
                     </span>
                 </motion.h1>
                 <motion.h2

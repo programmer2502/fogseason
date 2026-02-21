@@ -2,6 +2,7 @@ const SiteConfig = require('../models/SiteConfig');
 const Project = require('../models/Project');
 const Service = require('../models/Service');
 const Experience = require('../models/Experience');
+const Gallery = require('../models/Gallery');
 
 // Helper to ensure SiteConfig exists
 const getSiteConfig = async () => {
@@ -77,9 +78,10 @@ const getSiteConfig = async () => {
 exports.getPublicData = async (req, res) => {
     try {
         const config = await getSiteConfig();
-        const projects = await Project.find().sort({ createdAt: -1 });
+        const projects = await Project.find().sort({ order: 1 });
         const services = await Service.find();
         const experience = await Experience.find();
+        const gallery = await Gallery.find().sort({ order: 1 });
 
         // Construct the exact object structure the frontend expects
         const data = {
@@ -89,7 +91,8 @@ exports.getPublicData = async (req, res) => {
             contact: config.contact,
             projects: projects,
             services: services,
-            experience: experience
+            experience: experience,
+            gallery: gallery
         };
 
         res.json(data);
@@ -108,7 +111,7 @@ exports.updateSection = async (req, res) => {
 
     // List of valid sections
     const configSections = ['hero', 'about', 'contact', 'whatWeDo'];
-    const collectionSections = ['projects', 'services', 'experience'];
+    const collectionSections = ['projects', 'services', 'experience', 'gallery'];
 
     if (!configSections.includes(section) && !collectionSections.includes(section)) {
         return res.status(400).json({ message: 'Invalid section' });
@@ -135,7 +138,16 @@ exports.updateSection = async (req, res) => {
             const deleteResult = await Model.deleteMany({});
             console.log(`[UpdateSection] Deleted count: ${deleteResult.deletedCount}`);
 
-            const newItems = await Model.insertMany(content);
+            // Assign order if it's the projects collection
+            let contentToInsert = content;
+            if (section === 'projects' && Array.isArray(content)) {
+                contentToInsert = content.map((item, index) => ({
+                    ...item,
+                    order: index
+                }));
+            }
+
+            const newItems = await Model.insertMany(contentToInsert);
             console.log(`[UpdateSection] Inserted count: ${newItems.length}`);
 
             return res.json(newItems);
@@ -157,6 +169,7 @@ const getModel = (collectionName) => {
         case 'projects': return Project;
         case 'services': return Service;
         case 'experience': return Experience;
+        case 'gallery': return Gallery;
         default: return null;
     }
 };
