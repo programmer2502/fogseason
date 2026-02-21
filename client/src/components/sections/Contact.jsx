@@ -88,7 +88,7 @@ const Contact = () => {
                                     </div>
                                     <div>
                                         <p className="text-gray-500 text-sm font-medium uppercase tracking-wider">Branch Office</p>
-                                        <p className="text-slate-900 text-lg font-medium">No- 21/77, Kamaraj nagar, Madhuraboyal, Chennai - 600095</p>
+                                        <p className="text-slate-900 text-lg font-medium">No- 21/77, Kamaraj nagar, Maduravoyal, Chennai - 600095</p>
                                     </div>
                                 </div>
                             </div>
