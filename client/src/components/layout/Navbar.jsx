@@ -30,7 +30,11 @@ const Navbar = () => {
                 <div className="cusomlogo">
 
                     <img width="40px" src="./logo4.png" alt="loading" />
-                    <a href="#" className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary font-mono">
+                    <a
+                        href="#"
+                        className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary"
+                        style={{ fontFamily: '"Times New Roman", Times, serif' }}
+                    >
                         fogseason HVAC
                     </a>
                 </div>
