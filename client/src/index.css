@@ -30,6 +30,7 @@
   }
 }
 
+
 @layer components {
   .section-padding {
     @apply py-20 md:py-32;
