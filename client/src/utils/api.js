@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL: 'https://fogseason.onrender.com/api',
+    baseURL: 'site--fogseason--m5cfswjrcr88.code.run',
     // baseURL: 'http://localhost:5000/api',
 });
 
