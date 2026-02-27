@@ -9,7 +9,7 @@ const contentRoutes = require('./routes/contentRoutes');
 const uploadRoutes = require('./routes/uploadRoutes');
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = 5000;
 
 // 1. Immediate Port Binding to satisfy platform health checks
 app.listen(PORT, '0.0.0.0', () => {
