@@ -9,32 +9,60 @@ const contentRoutes = require('./routes/contentRoutes');
 const uploadRoutes = require('./routes/uploadRoutes');
 
 const app = express();
+const PORT = process.env.PORT || 5000;
 
-app.use(cors());
+// 1. Immediate Port Binding to satisfy platform health checks
+app.listen(PORT, '0.0.0.0', () => {
+    console.log(`🚀 Server is listening on 0.0.0.0:${PORT}`);
+    console.log(`📅 Started at: ${new Date().toISOString()}`);
+});
+
+// 2. Comprehensive CORS (Relaxed for debugging)
+app.use(cors({
+    origin: '*',
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+}));
+
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 
-// Routes
+// 3. Request Logging for Platform Logs
+app.use((req, res, next) => {
+    console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
+    next();
+});
+
+// 4. Primary & Health Check Routes
+app.get('/', (req, res) => res.status(200).send('FogSeason Backend API is running!'));
+app.get('/api/health', (req, res) => res.status(200).json({
+    status: 'ok',
+    mongodb: mongoose.connection.readyState === 1 ? 'connected' : 'connecting/disconnected',
+    time: new Date()
+}));
+
+// 5. API Routes
 app.use('/api/auth', authRoutes);
 app.use('/api', contentRoutes);
 app.use('/api/upload', uploadRoutes);
 
-const PORT = process.env.PORT || 5000;
-
-mongoose.connect(process.env.MONGO_URI)
-    .then(() => console.log('MongoDB connected'))
-    .catch((err) => {
-        console.error('------------------------------------------------');
-        console.error('❌ MongoDB Connection Error:', err.message);
-        console.error('------------------------------------------------');
-        console.error('It looks like MongoDB is not running or not matching the URI.');
-        console.error('Current URI:', process.env.MONGO_URI);
-        console.error('To fix this:');
-        console.error('1. Make sure MongoDB is installed and running.');
-        console.error('2. Check if the URI in .env file is correct.');
-        console.error('------------------------------------------------');
+// 6. Global Error Handler
+app.use((err, req, res, next) => {
+    console.error('❌ Server Internal Error:', err);
+    res.status(500).json({
+        success: false,
+        message: 'Internal server error',
+        error: err.message
     });
-
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
 });
+
+// 7. MongoDB Connection (Non-blocking with short timeout)
+mongoose.connect(process.env.MONGO_URI, {
+    serverSelectionTimeoutMS: 5000 // Timeout early if DB is down
+})
+    .then(() => console.log('✅ MongoDB connected successfully'))
+    .catch(err => {
+        console.error('❌ MongoDB Connection Failure:');
+        console.error(err.message);
+    });
