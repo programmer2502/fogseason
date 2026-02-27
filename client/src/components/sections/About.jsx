@@ -78,7 +78,7 @@ const About = () => {
 
                         <div className="grid grid-cols-2 gap-6 mb-10">
                             <div className="glass p-6 rounded-xl text-center border-t-2 border-primary hover:bg-blue-50/50 transition-colors">
-                                <span className="block text-4xl font-bold text-slate-900 mb-2">{about.experienceYears}+</span>
+                                <span className="block text-4xl font-bold text-slate-900 mb-2">2+</span>
                                 <span className="text-sm text-primary uppercase tracking-widest font-semibold">Years Exp.</span>
                             </div>
                             <div className="glass p-6 rounded-xl text-center border-t-2 border-secondary hover:bg-purple-50/50 transition-colors">

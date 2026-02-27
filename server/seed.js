@@ -33,7 +33,7 @@ const initialData = {
             { name: "Fire Protection", level: 98 }
         ],
         image: "https://images.unsplash.com/photo-1581094794329-cd282c0f4448?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
-        experienceYears: 15,
+        experienceYears: 2,
         projectsCompleted: 200
     },
     services: [
