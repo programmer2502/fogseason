@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const api = axios.create({
     // baseURL: 'https://fogseason-production.up.railway.app',
-    baseURL: 'http://site--fogseason--m5cfswjrcr88.code.run',
+    baseURL: 'https://site--fogseason--m5cfswjrcr88.code.run',
     // baseURL: 'http://localhost:5000/api',
 });
 
