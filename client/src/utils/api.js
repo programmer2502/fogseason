@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL: import.meta.env.VITE_API_URL || 'https://fogseason-production.up.railway.app/api',
+    baseURL: import.meta.env.VITE_API_URL || 'https://site--fogseason--m5cfswjrcr88.code.run/api',
 });
 
 // Add a request interceptor to include the auth token
