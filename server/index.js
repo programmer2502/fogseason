@@ -10,14 +10,16 @@ const uploadRoutes = require('./routes/uploadRoutes');
 
 const app = express();
 
-app.use(cors({
-    origin: ['https://www.fogseason.in', 'http://localhost:5173', 'http://localhost:3000'],
-    credentials: true
-}));
+app.use(cors()); // Temporarily allow all for debugging 503
+app.use((req, res, next) => {
+    console.log(`${req.method} ${req.url}`);
+    next();
+});
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 
 // Routes
+app.get('/api/health', (req, res) => res.json({ status: 'ok', time: new Date() }));
 app.use('/api/auth', authRoutes);
 app.use('/api', contentRoutes);
 app.use('/api/upload', uploadRoutes);
@@ -25,17 +27,10 @@ app.use('/api/upload', uploadRoutes);
 const PORT = process.env.PORT || 5000;
 
 mongoose.connect(process.env.MONGO_URI)
-    .then(() => console.log('MongoDB connected'))
+    .then(() => console.log('✅ MongoDB connected successfully'))
     .catch((err) => {
-        console.error('------------------------------------------------');
         console.error('❌ MongoDB Connection Error:', err.message);
-        console.error('------------------------------------------------');
-        console.error('It looks like MongoDB is not running or not matching the URI.');
-        console.error('Current URI:', process.env.MONGO_URI);
-        console.error('To fix this:');
-        console.error('1. Make sure MongoDB is installed and running.');
-        console.error('2. Check if the URI in .env file is correct.');
-        console.error('------------------------------------------------');
+        // Do not keep the error message in production logs usually, but here it helps
     });
 
 app.listen(PORT, () => {
