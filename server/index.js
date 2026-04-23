@@ -9,26 +9,17 @@ const contentRoutes = require('./routes/contentRoutes');
 const uploadRoutes = require('./routes/uploadRoutes');
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = 5000;
 
-const allowedOrigins = [
-    'https://www.fogseason.in',
-    'https://fogseason.in',
-    'http://localhost:5173',
-    'http://localhost:3000'
-];
+// 1. Immediate Port Binding to satisfy platform health checks
+app.listen(PORT, '0.0.0.0', () => {
+    console.log(`🚀 Server is listening on 0.0.0.0:${PORT}`);
+    console.log(`📅 Started at: ${new Date().toISOString()}`);
+});
 
+// 2. Comprehensive CORS (Relaxed for debugging)
 app.use(cors({
-    origin: function (origin, callback) {
-        // Allow requests with no origin (like mobile apps or curl requests)
-        if (!origin) return callback(null, true);
-        if (allowedOrigins.indexOf(origin) !== -1 || origin.includes('railway.app')) {
-            callback(null, true);
-        } else {
-            console.log('Blocked Origin:', origin);
-            callback(new Error('Not allowed by CORS'));
-        }
-    },
+    origin: '*',
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization']
@@ -75,9 +66,3 @@ mongoose.connect(process.env.MONGO_URI, {
         console.error('❌ MongoDB Connection Failure:');
         console.error(err.message);
     });
-
-// 8. Server Listen
-app.listen(PORT, '0.0.0.0', () => {
-    console.log(`🚀 Server is listening on 0.0.0.0:${PORT}`);
-    console.log(`📅 Started at: ${new Date().toISOString()}`);
-});
