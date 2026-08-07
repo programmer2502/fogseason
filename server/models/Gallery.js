@@ -7,4 +7,6 @@ const gallerySchema = new mongoose.Schema({
     createdAt: { type: Date, default: Date.now }
 });
 
+gallerySchema.index({ order: 1 });
+
 module.exports = mongoose.model('Gallery', gallerySchema);

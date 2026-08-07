@@ -7,6 +7,7 @@ dotenv.config();
 const authRoutes = require('./routes/authRoutes');
 const contentRoutes = require('./routes/contentRoutes');
 const uploadRoutes = require('./routes/uploadRoutes');
+const { warmPublicDataCache } = require('./controllers/contentController');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -61,7 +62,10 @@ app.use((err, req, res, next) => {
 mongoose.connect(process.env.MONGO_URI, {
     serverSelectionTimeoutMS: 5000 // Timeout early if DB is down
 })
-    .then(() => console.log('✅ MongoDB connected successfully'))
+    .then(() => {
+        console.log('✅ MongoDB connected successfully');
+        warmPublicDataCache();
+    })
     .catch(err => {
         console.error('❌ MongoDB Connection Failure:');
         console.error(err.message);

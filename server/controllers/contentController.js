@@ -4,6 +4,42 @@ const Service = require('../models/Service');
 const Experience = require('../models/Experience');
 const Gallery = require('../models/Gallery');
 
+// In-memory cache for public data
+let publicDataCache = null;
+
+const clearCache = () => {
+    publicDataCache = null;
+    console.log('🧹 In-memory public data cache cleared');
+};
+
+// Cache pre-warming function
+const warmPublicDataCache = async () => {
+    try {
+        console.log('🔥 Pre-warming public data cache...');
+        const config = await getSiteConfig();
+        const [projects, services, experience, gallery] = await Promise.all([
+            Project.find().sort({ order: 1 }).lean(),
+            Service.find().lean(),
+            Experience.find().lean(),
+            Gallery.find().sort({ order: 1 }).lean()
+        ]);
+
+        publicDataCache = {
+            hero: config.hero,
+            about: config.about,
+            whatWeDo: config.whatWeDo,
+            contact: config.contact,
+            projects: projects,
+            services: services,
+            experience: experience,
+            gallery: gallery
+        };
+        console.log('✅ Public data cache pre-warmed successfully');
+    } catch (error) {
+        console.error('❌ Failed to pre-warm public data cache:', error.message);
+    }
+};
+
 // Helper to ensure SiteConfig exists
 const getSiteConfig = async () => {
     let config = await SiteConfig.findOne();
@@ -77,14 +113,21 @@ const getSiteConfig = async () => {
 
 exports.getPublicData = async (req, res) => {
     try {
+        if (publicDataCache) {
+            return res.json(publicDataCache);
+        }
+
+        // Fetch all components in parallel using Promise.all and lean queries for maximum speed
         const config = await getSiteConfig();
-        const projects = await Project.find().sort({ order: 1 });
-        const services = await Service.find();
-        const experience = await Experience.find();
-        const gallery = await Gallery.find().sort({ order: 1 });
+        const [projects, services, experience, gallery] = await Promise.all([
+            Project.find().sort({ order: 1 }).lean(),
+            Service.find().lean(),
+            Experience.find().lean(),
+            Gallery.find().sort({ order: 1 }).lean()
+        ]);
 
         // Construct the exact object structure the frontend expects
-        const data = {
+        publicDataCache = {
             hero: config.hero,
             about: config.about,
             whatWeDo: config.whatWeDo,
@@ -95,7 +138,7 @@ exports.getPublicData = async (req, res) => {
             gallery: gallery
         };
 
-        res.json(data);
+        res.json(publicDataCache);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
@@ -103,7 +146,6 @@ exports.getPublicData = async (req, res) => {
 
 // --- ADMIN ---
 
-// Section Updates (Hero, About, Contact)
 // Section Updates (Hero, About, Contact) - AND Collections (Projects, Services, Experience)
 exports.updateSection = async (req, res) => {
     const { section } = req.params; // 'hero', 'about', 'contact', 'whatWeDo', 'projects', 'services', 'experience'
@@ -150,6 +192,7 @@ exports.updateSection = async (req, res) => {
             const newItems = await Model.insertMany(contentToInsert);
             console.log(`[UpdateSection] Inserted count: ${newItems.length}`);
 
+            clearCache();
             return res.json(newItems);
         }
 
@@ -157,6 +200,8 @@ exports.updateSection = async (req, res) => {
         let config = await getSiteConfig();
         config[section] = content;
         await config.save();
+        
+        clearCache();
         res.json(config[section]);
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -182,6 +227,7 @@ exports.addToCollection = async (req, res) => {
 
     try {
         const newItem = await Model.create(req.body);
+        clearCache();
         res.status(201).json(newItem);
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -197,6 +243,7 @@ exports.updateCollectionItem = async (req, res) => {
     try {
         const updatedItem = await Model.findByIdAndUpdate(id, req.body, { new: true });
         if (!updatedItem) return res.status(404).json({ message: 'Item not found' });
+        clearCache();
         res.json(updatedItem);
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -212,8 +259,11 @@ exports.deleteCollectionItem = async (req, res) => {
     try {
         const deletedItem = await Model.findByIdAndDelete(id);
         if (!deletedItem) return res.status(404).json({ message: 'Item not found' });
+        clearCache();
         res.json({ message: 'Item deleted' });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
 };
+
+exports.warmPublicDataCache = warmPublicDataCache;

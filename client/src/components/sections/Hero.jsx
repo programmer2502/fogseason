@@ -22,6 +22,8 @@ const Hero = () => {
                     src="/images/hero-bg.jpg"
                     alt="Background"
                     className="w-full h-full object-cover blur-[3px] scale-105"
+                    loading="eager"
+                    fetchpriority="high"
                 />
             </div>
             <div className="absolute inset-0 bg-white/70 z-[1]"></div>

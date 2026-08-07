@@ -116,6 +116,7 @@ const GalleryCard = ({ item, index, onClick }) => (
             src={item.url}
             alt={item.caption || `Gallery image ${index + 1}`}
             className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-110"
+            loading="lazy"
         />
         {/* Hover overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/20 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300 flex flex-col justify-end p-6">
