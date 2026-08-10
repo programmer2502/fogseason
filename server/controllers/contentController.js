@@ -10,6 +10,10 @@ let publicDataCache = null;
 const clearCache = () => {
     publicDataCache = null;
     console.log('🧹 In-memory public data cache cleared');
+    // Pre-warm the cache asynchronously so the next request gets it instantly
+    warmPublicDataCache().catch(err => {
+        console.error('❌ Failed to pre-warm public data cache after clearing:', err.message);
+    });
 };
 
 // Cache pre-warming function

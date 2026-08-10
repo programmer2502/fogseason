@@ -9,8 +9,8 @@ export const compressImage = (file) => {
                 const canvas = document.createElement('canvas');
 
                 // Max dimensions
-                const MAX_WIDTH = 800;
-                const MAX_HEIGHT = 800;
+                const MAX_WIDTH = 600;
+                const MAX_HEIGHT = 600;
                 let width = img.width;
                 let height = img.height;
 
@@ -32,8 +32,8 @@ export const compressImage = (file) => {
                 const ctx = canvas.getContext('2d');
                 ctx.drawImage(img, 0, 0, width, height);
 
-                // Compress to JPEG with 0.7 quality
-                resolve(canvas.toDataURL('image/jpeg', 0.7));
+                // Compress to JPEG with 0.6 quality
+                resolve(canvas.toDataURL('image/jpeg', 0.6));
             };
             img.onerror = (err) => reject(err);
         };

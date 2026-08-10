@@ -4,6 +4,8 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 dotenv.config();
 
+const compression = require('compression');
+
 const authRoutes = require('./routes/authRoutes');
 const contentRoutes = require('./routes/contentRoutes');
 const uploadRoutes = require('./routes/uploadRoutes');
@@ -11,6 +13,9 @@ const { warmPublicDataCache } = require('./controllers/contentController');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
+
+// Enable gzip/deflate compression for all routes
+app.use(compression());
 
 // 1. Immediate Port Binding to satisfy platform health checks
 app.listen(PORT, '0.0.0.0', () => {
@@ -57,6 +62,9 @@ app.use((err, req, res, next) => {
         error: err.message
     });
 });
+
+// Disable buffering to fail fast on DB disconnect
+mongoose.set('bufferCommands', false);
 
 // 7. MongoDB Connection (Non-blocking with short timeout)
 mongoose.connect(process.env.MONGO_URI, {
